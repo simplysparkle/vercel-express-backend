@@ -1,16 +1,16 @@
 {
   "name": "vercel-express-backend",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "api/appointments.js",
+  "scripts": {
+    "start": "node api/appointments.js",
+    "dev": "vercel dev"
+  },
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "pg": "^8.7.1",
     "serverless-http": "^3.2.0",
-    "vercel": "^37.5.3"
-  },
-  "scripts": {
-    "start": "node server.js",
-    "build" : "echo Building the project..."
+    "cors": "^2.8.5"
   }
 }

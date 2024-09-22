@@ -1,8 +1,13 @@
+// src/routes/appointments.js
+
 const express = require('express');
-   const router = express.Router();
-   const appointmentController = require('../controllers/appointmentController');
+const router = express.Router();
+const appointmentController = require('../controllers/appointmentController');
 
-   router.post('/', appointmentController.createAppointment);
-   router.get('/', appointmentController.getAppointments);
+// Route to create a new appointment
+router.post('/', appointmentController.createAppointment);
 
-   module.exports = router;
+// Route to retrieve all appointments
+router.get('/', appointmentController.getAppointments);
+
+module.exports = router;
