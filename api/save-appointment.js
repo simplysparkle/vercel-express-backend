@@ -1,13 +1,12 @@
 // api/save-appointment.js
 
-// Use CommonJS syntax if ES Modules are not enabled
 const pool = require('../db/db');
 
 module.exports = async (req, res) => {
   const {
     firstName,
     lastName,
-    mobileNumber, // Updated to match 'mobile_number'
+    mobileNumber,
     email,
     services, // Assuming 'service' column can store an array
     date,
@@ -25,7 +24,8 @@ module.exports = async (req, res) => {
     !Array.isArray(services)
   ) {
     return res.status(400).json({
-      error: 'Invalid input. Ensure all required fields are filled and services is an array',
+      error:
+        'Invalid input. Ensure all required fields are filled and services is an array',
     });
   }
 
@@ -42,7 +42,15 @@ module.exports = async (req, res) => {
         time
       ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
     `;
-    const values = [firstName, lastName, mobileNumber, email, services, date, time]; // 'services' is an array
+    const values = [
+      firstName,
+      lastName,
+      mobileNumber,
+      email,
+      services, // 'services' is an array
+      date,
+      time,
+    ];
 
     const result = await pool.query(query, values);
 
