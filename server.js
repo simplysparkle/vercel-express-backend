@@ -1,13 +1,20 @@
 const express = require('express');
-const router = express.Router();
-const appointmentController = require('../controllers/appointmentController');
+   const appointmentsRouter = require('./src/routes/appointments');
+   require('dotenv').config();
 
+   const app = express();
+   const port = process.env.PORT || 3000;
 
-app.get('/api/test', (req, res) => {
-    res.json({ message: 'API is working' });
-  });   
+   app.use(express.json());
 
-router.post('/', appointmentController.createAppointment);
-router.get('/', appointmentController.getAppointments);
+   app.use('/api/appointments', appointmentsRouter);
 
-module.exports = router;
+   app.get('/', (req, res) => {
+     res.json({ message: 'Welcome to the Appointments API!' });
+   });
+
+   app.listen(port, () => {
+     console.log(`Server running on port ${port}`);
+   });
+
+   module.exports = app;
