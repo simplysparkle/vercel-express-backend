@@ -1,5 +1,4 @@
 const pool = require('../db/db');
-const { format } = require('date-fns'); // Importing date-fns for date formatting
 
 module.exports = async (req, res) => {
   // Set CORS headers to allow requests from any origin
@@ -34,9 +33,6 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // Ensure the date is formatted to YYYY-MM-DD
-    const formattedDate = format(new Date(date), 'yyyy-MM-dd'); // Formatting the date in the backend
-
     // Insert into the database with array of services
     const query = `
       INSERT INTO appointments (
@@ -49,7 +45,7 @@ module.exports = async (req, res) => {
         time
       ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
     `;
-    const values = [firstName, lastName, mobileNumber, email, services, formattedDate, time]; // Insert the formatted date
+    const values = [firstName, lastName, mobileNumber, email, services, date, time];
     const result = await pool.query(query, values);
 
     return res.status(201).json({ success: true, appointment: result.rows[0] });
