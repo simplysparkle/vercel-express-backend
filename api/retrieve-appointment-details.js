@@ -3,6 +3,10 @@
 const pool = require('../db/db');
 
 module.exports = async (req, res) => {
+      // Set CORS headers to allow requests from any origin
+  res.setHeader('Access-Control-Allow-Origin', '*');  // For development, allow all origins. For production, specify your frontend domain.
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
   const { id } = req.query;
 
   if (!id) {
