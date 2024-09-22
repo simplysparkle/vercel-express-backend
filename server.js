@@ -13,6 +13,11 @@ const express = require('express');
      res.json({ message: 'Welcome to the Appointments API!' });
    });
 
+   app.get('/nithish', (req, res) => {
+    res.json({ message: 'Hi nithish to the Appointments API!' });
+  });
+
+
    app.listen(port, () => {
      console.log(`Server running on port ${port}`);
    });
