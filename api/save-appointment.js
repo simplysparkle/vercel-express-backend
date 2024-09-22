@@ -1,31 +1,34 @@
-// api/save-appointment.js
-
 const pool = require('../db/db');
 
 module.exports = async (req, res) => {
+  // Set CORS headers to allow requests from any origin
+  res.setHeader('Access-Control-Allow-Origin', '*');  // For development, allow all origins. For production, specify your frontend domain.
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+
+  // Handle preflight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();  // End the response for preflight requests
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
   const {
     firstName,
     lastName,
     mobileNumber,
     email,
-    services, // Assuming 'service' column can store an array
+    services,
     date,
     time,
   } = req.body;
 
   // Validate input fields
-  if (
-    !firstName ||
-    !lastName ||
-    !mobileNumber ||
-    !services ||
-    !date ||
-    !time ||
-    !Array.isArray(services)
-  ) {
+  if (!firstName || !lastName || !mobileNumber || !services || !date || !time || !Array.isArray(services)) {
     return res.status(400).json({
-      error:
-        'Invalid input. Ensure all required fields are filled and services is an array',
+      error: 'Invalid input. Ensure all required fields are filled and services is an array',
     });
   }
 
@@ -42,16 +45,7 @@ module.exports = async (req, res) => {
         time
       ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
     `;
-    const values = [
-      firstName,
-      lastName,
-      mobileNumber,
-      email,
-      services, // 'services' is an array
-      date,
-      time,
-    ];
-
+    const values = [firstName, lastName, mobileNumber, email, services, date, time];
     const result = await pool.query(query, values);
 
     return res.status(201).json({ success: true, appointment: result.rows[0] });
