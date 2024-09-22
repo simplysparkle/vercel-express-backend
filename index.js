@@ -1,6 +1,7 @@
+// index.js
+
 const express = require('express');
 const app = express();
-const port = 3000;
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -10,14 +11,8 @@ app.get('/', (req, res) => {
   res.send('Hello from Node.js!');
 });
 
-// API route
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello API!' });
-});
+// API routes can be added here if needed
+// But typically, with Vercel, you define separate files under the `api` folder
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
-
-module.exports = app; // Needed for Vercel's serverless function
+// Export the Express app
+module.exports = app;

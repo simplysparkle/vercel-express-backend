@@ -1,6 +1,8 @@
-import pool from '../db/db';
+// api/retrieve-appointment-details.js
 
-export default async (req, res) => {
+const pool = require('../db/db');
+
+module.exports = async (req, res) => {
   const { id } = req.query;
 
   if (!id) {
@@ -17,7 +19,7 @@ export default async (req, res) => {
 
     return res.status(200).json({ appointment: result.rows[0] });
   } catch (error) {
-    console.error(error);
+    console.error('Error retrieving appointment:', error);
     return res.status(500).json({ error: 'Database error' });
   }
 };
