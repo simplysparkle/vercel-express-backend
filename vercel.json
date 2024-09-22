@@ -6,14 +6,22 @@
         "use": "@vercel/node"
       },
       {
-        "src": "api/hello.js",
+        "src": "api/save-appointment.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "api/retrieve-appointment-details.js",
         "use": "@vercel/node"
       }
     ],
     "routes": [
       {
-        "src": "/api/(.*)",
-        "dest": "/api/hello.js"
+        "src": "/api/save-appointment",
+        "dest": "/api/save-appointment.js"
+      },
+      {
+        "src": "/api/retrieve-appointment-details",
+        "dest": "/api/retrieve-appointment-details.js"
       }
     ]
   }
